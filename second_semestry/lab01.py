@@ -1,29 +1,25 @@
-import time 
-import random 
+import time
+import random
 
-#1 Генерация данных
-n = 100000
-data = [random.randint(1, n // 2) for _ in range(n)] #список из 100к чисел от 1 до 50000
-target = random.choice(data) #гарантом есть в дата
+sizes = [1000, 10000, 100000, 300000]
+results = []
 
-print(f"n={n}, target={target}")
-
-#2 Поиск в списке (операция: target in data)
-start = time.perf_counter() #старт таймера 
-found_in_list = (target in data)
-end = time.perf_counter()
-list_time = end - start
-
-#3 создание множества из списка, не поиск - это отдельная операция преобразования
-data_set = set(data)
-
-#4 поиск в множестве
-start = time.perf_counter()
-found_in_set = target in data_set
-end = time.perf_counter()
-set_time = end - start
-
-#5 вывод результатов
-print(f"Найдено в списке: {found_in_list}, время: {list_time:.8f} сек")
-print(f"Найдено в множестве: {found_in_set}, время: {set_time:.8f} сек")
-print(f"Ускорение: {list_time / set_time:.1f}x")
+for n in sizes:
+    # Генерация данных
+    data = [random.randint(1, n // 2) for _ in range(n)]
+    target = random.choice(data)
+    
+    # Измерение поиска в списке
+    start = time.perf_counter()
+    found = target in data
+    time_list = time.perf_counter() - start
+    
+    # Измерение поиска в множестве
+    data_set = set(data)
+    start = time.perf_counter()
+    found = target in data_set
+    time_set = time.perf_counter() - start
+    
+    results.append((n, time_list, time_set))
+    
+    print(f"n={n:7d} | Список: {time_list:.6f}с | Множество: {time_set:.6f}с")
