@@ -23,3 +23,13 @@ for n in sizes:
     results.append((n, time_list, time_set))
     
     print(f"n={n:7d} | Список: {time_list:.6f}с | Множество: {time_set:.6f}с")
+
+    # Сохранение результатов в файл
+with open('lab01_results.txt', 'w', encoding='utf-8') as f:
+    f.write("Размер | Список (сек) | Множество (сек) | Ускорение\n")
+    f.write("-" * 60 + "\n")
+    for n, t_list, t_set in results:
+        speedup = t_list / t_set if t_set > 0 else float('inf')
+        f.write(f"{n:7d} | {t_list:12.6f} | {t_set:15.6f} | {speedup:9.1f}x\n")
+
+print("Результаты сохранены в lab01_results.txt")
