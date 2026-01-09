@@ -15,9 +15,16 @@ def load_routes(filename: str) -> dict:
                 "stops": stops
             }
     return routes
+def find_route(routes: dict, route_id: int):
+    """O(1) поиск. None если не найден."""
+    return routes.get(route_id)
+
 
 
 if __name__ == "__main__":
-    routes = load_routes("routes.csv")
+    routes = load_routes("hw_02/routes.csv")
     print("Загружено маршрутов:", len(routes))
     print("Маршрут 1:", routes.get(1))
+    print("Поиск ID=1:", find_route(routes, 1))
+    print("Поиск ID=999:", find_route(routes, 999))
+
